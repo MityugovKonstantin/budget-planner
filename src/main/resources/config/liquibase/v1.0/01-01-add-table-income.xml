@@ -1,0 +1,24 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="1" author="mityugov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="income"/>
+            </not>
+        </preConditions>
+        <createTable tableName="income">
+            <column name="id" type="BIGINT"/>
+            <column name="title" type="VARCHAR(1024)"/>
+            <column name="date" type="DATE" defaultValueDate="now()"/>
+            <column name="amount" type="INT"/>
+        </createTable>
+        <addPrimaryKey tableName="income" columnNames="id" constraintName="income_pk"/>
+        <addAutoIncrement tableName="income" columnName="id" incrementBy="1" startWith="1" columnDataType="BIGINT"/>
+        <rollback>
+            <dropPrimaryKey tableName="income" constraintName="income_pk"/>
+            <dropTable tableName="income"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
