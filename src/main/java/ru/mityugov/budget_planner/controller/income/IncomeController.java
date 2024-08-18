@@ -2,6 +2,7 @@ package ru.mityugov.budget_planner.controller.income;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ public class IncomeController {
 
     @PostMapping
     @Operation(summary = "Save new income.")
-    public SaveIncomeResponse saveIncome(@RequestBody SaveIncomeRequest request) {
+    public SaveIncomeResponse saveIncome(@Valid @RequestBody SaveIncomeRequest request) {
 
         SaveIncomeDto saveIncomeDto = new SaveIncomeDto(
                 request.getTitle(),
