@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.mityugov.budget_planner.exception.NotFoundException;
-import ru.mityugov.budget_planner.exception.validation.ValidationErrorResponse;
-import ru.mityugov.budget_planner.exception.validation.Violation;
+import ru.mityugov.budget_planner.validation.ValidationErrorResponse;
+import ru.mityugov.budget_planner.validation.Violation;
 
 import java.util.List;
 import java.util.stream.Collectors;

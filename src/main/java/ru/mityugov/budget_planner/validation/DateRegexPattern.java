@@ -1,4 +1,4 @@
-package ru.mityugov.budget_planner.validate;
+package ru.mityugov.budget_planner.validation;
 
 public class DateRegexPattern {
     public final static String ISO_LOCAL_DATE =

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import ru.mityugov.budget_planner.validate.DateRegexPattern;
+import ru.mityugov.budget_planner.validation.DateRegexPattern;
 
 @Data
 public class SaveIncomeRequest {

@@ -1,4 +1,4 @@
-package ru.mityugov.budget_planner.exception.validation;
+package ru.mityugov.budget_planner.validation;
 
 import java.util.List;
 
