@@ -1,47 +1,30 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import HealthCheck from './components/health_check/HealthCheck.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="paragraph">
+    <p>Hello! This is a budget planner!</p>
+    <p>
+      Here you can plan your budget whatever it is. You can add monthly and 
+      "sudden" income and expenses. You can check the server status by the button below.
+    </p>
+  </div>
+  <HealthCheck/>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+p {
+  line-height: 20px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.paragraph {
+  width: 30%;
+  font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace; 
+  font-size: 14px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 400; 
+  line-height: 10px;
 }
 </style>
