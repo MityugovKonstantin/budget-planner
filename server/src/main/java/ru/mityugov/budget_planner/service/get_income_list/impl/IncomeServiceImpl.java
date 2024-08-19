@@ -1,17 +1,22 @@
-package ru.mityugov.budget_planner.service.impl;
+package ru.mityugov.budget_planner.service.get_income_list.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.mityugov.budget_planner.exception.NotFoundException;
 import ru.mityugov.budget_planner.repository.IncomeRepository;
 import ru.mityugov.budget_planner.repository.entity.IncomeEntity;
-import ru.mityugov.budget_planner.service.IncomeService;
-import ru.mityugov.budget_planner.service.dto.GetIncomeDto;
-import ru.mityugov.budget_planner.service.dto.SaveIncomeDto;
+import ru.mityugov.budget_planner.service.get_income_list.IncomeService;
+import ru.mityugov.budget_planner.service.get_income_list.dto.GetIncomeListDto;
+import ru.mityugov.budget_planner.service.get_income_list.dto.IncomeDto;
+import ru.mityugov.budget_planner.service.get_income_list.dto.SaveIncomeDto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -37,7 +42,7 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public GetIncomeDto getIncomeById(long id) throws NotFoundException {
+    public IncomeDto getIncomeById(long id) throws NotFoundException {
         log.debug("Start getting income by id.");
 
         Optional<IncomeEntity> incomeEntityOptional = incomeRepository.findById(id);
@@ -52,11 +57,30 @@ public class IncomeServiceImpl implements IncomeService {
 
         String incomeDate = incomeEntity.getLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
 
-        return new GetIncomeDto(
+        return new IncomeDto(
                 incomeEntity.getId(),
                 incomeEntity.getTitle(),
                 incomeDate,
                 incomeEntity.getAmount()
         );
+    }
+
+    @Override
+    public List<IncomeDto> getIncomeList(GetIncomeListDto getIncomeListDto) {
+        Pageable pageable = PageRequest.of(
+                getIncomeListDto.getPageNumber(),
+                getIncomeListDto.getPageSize()
+        );
+
+        Page<IncomeEntity> incomeEntityPage = incomeRepository.findAll(pageable);
+
+        List<IncomeEntity> incomeEntityList = incomeRepository.findAll();
+
+        return incomeEntityPage.map((element) -> new IncomeDto(
+                element.getId(),
+                element.getTitle(),
+                element.getLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE),
+                element.getAmount()
+        )).toList();
     }
 }

@@ -10,12 +10,12 @@ const ServerStatus = {
 const currentServerStatus = ref(ServerStatus.NO_CALL)
 
 async function checkServerStatus() {
-    let status = await fetch("http://localhost:8080/health-check")
-    if (status.ok) {
-        currentServerStatus.value = ServerStatus.OK
-    } else {
-        currentServerStatus.value = ServerStatus.ERROR
-    }
+    await fetch("http://localhost:8080/health-check")
+        .then(resp => {
+            if (!resp.ok) throw new Error(resp.status)
+            currentServerStatus.value = ServerStatus.OK
+        })
+        .catch(() => currentServerStatus.value = ServerStatus.ERROR)
 }
 </script>
 
@@ -31,15 +31,13 @@ button {
     font-size: 14px; 
     font-style: normal; 
     font-variant: normal; 
-    font-weight: 400; 
-    line-height: 20px;
+    font-weight: 400;
 }
 .paragraph {
     font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace; 
     font-size: 14px; 
     font-style: normal; 
     font-variant: normal; 
-    font-weight: 400; 
-    line-height: 20px;
+    font-weight: 400;
 }
 </style>

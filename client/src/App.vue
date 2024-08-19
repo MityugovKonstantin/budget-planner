@@ -1,5 +1,6 @@
 <script setup>
 import HealthCheck from './components/health_check/HealthCheck.vue'
+import Income from './components/income/Income.vue';
 </script>
 
 <template>
@@ -11,6 +12,8 @@ import HealthCheck from './components/health_check/HealthCheck.vue'
     </p>
   </div>
   <HealthCheck/>
+  <Income/>
+
 </template>
 
 <style scoped>
@@ -25,6 +28,6 @@ p {
   font-style: normal; 
   font-variant: normal; 
   font-weight: 400; 
-  line-height: 10px;
+  line-height: 20px;
 }
 </style>
