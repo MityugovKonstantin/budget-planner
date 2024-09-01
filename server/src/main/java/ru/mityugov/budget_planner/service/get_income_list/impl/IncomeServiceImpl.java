@@ -13,6 +13,7 @@ import ru.mityugov.budget_planner.service.get_income_list.IncomeService;
 import ru.mityugov.budget_planner.service.get_income_list.dto.GetIncomeListDto;
 import ru.mityugov.budget_planner.service.get_income_list.dto.IncomeDto;
 import ru.mityugov.budget_planner.service.get_income_list.dto.SaveIncomeDto;
+import ru.mityugov.budget_planner.service.get_income_list.dto.UpdateIncomeDto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -82,5 +83,26 @@ public class IncomeServiceImpl implements IncomeService {
                 element.getLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE),
                 element.getAmount()
         )).toList();
+    }
+
+    @Override
+    public void deleteById(long id) {
+        incomeRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(long id, UpdateIncomeDto updateIncomeDto) throws NotFoundException {
+        IncomeEntity entity = incomeRepository.findById(id).orElseThrow(() -> new NotFoundException("id", id));
+        if (updateIncomeDto.getAmount() > 0) {
+            entity.setAmount(updateIncomeDto.getAmount());
+        }
+        if (null != updateIncomeDto.getDate() && !updateIncomeDto.getDate().isBlank()) {
+            LocalDate incomeLocalDate = LocalDate.parse(updateIncomeDto.getDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+            entity.setLocalDate(incomeLocalDate);
+        }
+        if (null != updateIncomeDto.getTitle() && !updateIncomeDto.getTitle().isBlank()) {
+            entity.setTitle(updateIncomeDto.getTitle());
+        }
+        incomeRepository.save(entity);
     }
 }
