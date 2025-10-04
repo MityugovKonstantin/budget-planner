@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: budget-planner
+
+  liquibase:
+    enabled: ${IS_LIQUIBASE_ENABLED:false}
+    changelog: classpath:db/changelog/db.changelog-master.xml
+
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
