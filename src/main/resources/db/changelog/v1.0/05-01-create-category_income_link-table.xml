@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-category_income_link-table" author="kmityugov">
+
+        <preConditions onFail="MARK_RAN" onFailMessage="Table 'category_income_link' is already exist.">
+            <not>
+                <tableExists tableName="category_income_link"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="category_income_link">
+            <column name="category_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="income_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="category_income_link" columnNames="category_id, income_id" constraintName="pk_category_income_link"/>
+        <addForeignKeyConstraint baseTableName="category_income_link" baseColumnNames="category_id" referencedTableName="income_category"
+                                 referencedColumnNames="id" constraintName="fk_category_income_link_category_id_on_category_id"/>
+        <addForeignKeyConstraint baseTableName="category_income_link" baseColumnNames="income_id" referencedTableName="income"
+                                 referencedColumnNames="id" constraintName="fk_category_income_link_income_id_on_income_id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="category_income_link" constraintName="fk_category_income_link_category_id_on_category_id"/>
+            <dropForeignKeyConstraint baseTableName="category_income_link" constraintName="fk_category_income_link_income_id_on_income_id"/>
+            <dropPrimaryKey tableName="category_income_link" constraintName="pk_category_income_link"/>
+            <dropTable tableName="category_income_link"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

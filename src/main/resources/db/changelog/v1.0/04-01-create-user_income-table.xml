@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-user_income_link-table" author="kmityugov">
+
+        <preConditions onFail="MARK_RAN" onFailMessage="Table 'user_income_link' is already exist.">
+            <not>
+                <tableExists tableName="user_income_link"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="user_income_link">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="income_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="user_income_link" columnNames="user_id, income_id" constraintName="pk_user_income_link"/>
+        <addForeignKeyConstraint baseTableName="user_income_link" baseColumnNames="user_id" referencedTableName="user"
+                                 referencedColumnNames="id" constraintName="fk_user_income_link_user_id_on_user_id"/>
+        <addForeignKeyConstraint baseTableName="user_income_link" baseColumnNames="income_id" referencedTableName="income"
+                                 referencedColumnNames="id" constraintName="fk_user_income_link_income_id_on_income_id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="user_income_link" constraintName="fk_user_income_link_user_id_on_user_id"/>
+            <dropForeignKeyConstraint baseTableName="user_income_link" constraintName="fk_user_income_link_income_id_on_income_id"/>
+            <dropPrimaryKey tableName="user_income_link" constraintName="pk_user_income_link"/>
+            <dropTable tableName="user_income_link"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
